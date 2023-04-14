@@ -1,0 +1,46 @@
+// Реализуйте структуру телефонной книги с помощью HashMap, учитывая, что 1 человек может иметь несколько телефонов.
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+public class PhoneBook {
+
+    private Map<String, Set<String>> phoneBook;
+
+    public PhoneBook() {
+        phoneBook = new HashMap<>();
+    }
+
+    public void addPhone(String name, String phoneNumber) {
+        Set<String> phones = phoneBook.get(name);
+        if (phones == null) {
+            phones = new HashSet<>();
+            phoneBook.put(name, phones);
+        }
+        phones.add(phoneNumber);
+    }
+
+    public Set<String> getPhones(String name) {
+        return phoneBook.get(name);
+    }
+
+    public void removePhone(String name, String phoneNumber) {
+        Set<String> phones = phoneBook.get(name);
+        if (phones != null) {
+            phones.remove(phoneNumber);
+            if (phones.isEmpty()) {
+                phoneBook.remove(name);
+            }
+        }
+    }
+
+    public void printAll() {
+        for (String name : phoneBook.keySet()) {
+            Set<String> phones = phoneBook.get(name);
+            System.out.println(name + ": " + phones);
+        }
+    }
+
+}
